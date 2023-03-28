@@ -1,0 +1,61 @@
+//
+// Created by Chu-Hsuan Lin on 2022/2/13.
+//
+
+=== Project2 - Content-based Image Retrieval ===
+https://wiki.khoury.northeastern.edu/display/~chuhsuanlin/Project+2%3A+Content-based+Image+Retrieval
+
+#Built With
+Operating system: MacOS Monterey (12.1)
+IDE: CLion  https://www.jetbrains.com/clion/
+
+#Installation and Setup
+1. Install openCV
+2. Modify the CMakeLists.txt
+    find_package(OpenCV)
+    include_directories(${/usr/local/include/}) //location of your OpenCV
+3. Build the project with g++  // Using Content-base Image Retrieval for OUTPUT_NAME below
+
+# Files in the project
+1. main.cpp - main file control the progress
+2. getFeature.cpp - collect all features and save to csv file
+3. filter.cpp - filter function and kernel
+4. matching.cpp - difference calculation method and match best images
+5. csv_util.cpp - read and write csv file
+
+#Instructions for running the executables
+1. Input arguments :
+    (1) target image name
+        input the image name as "pic.0001.jpg" format
+    (2) database folder name
+        database folder dir name
+    (3) feature type
+        <1> baseline - for task 1 Baseline matching
+        <2> hist_2d - for task 2 Histogram matching - rg chromaticity histogram
+        <3> hist_3d - for task 2 Histogram matching - whole image RGB histogram
+        <4> multi_hist - for task 3 Multi histogram matching
+        <5> texture_color - for task 4 Texture and Color
+        <6> custom_design - for task 5 Custom Design
+        <7> blue_can - extension for finding blue recycle can
+        <8> green_can - extension for finding green trash can
+        <9> banana - extension for finding banana
+        <10> gabor_feature - extension for gabor filter
+    (4) distance metric method
+        <1> ssd - calculate sum square difference
+        <2> sad - calculate sum absolute difference
+        <3> inter_hist - calculate histogram intersecion difference
+    (5) number of best match
+
+The order for different arguments :
+./Content-base Image Retrieval {target_image_name} {database folder name} {feature type} {distance metric} {n_best_match}
+
+Example:
+Taks 1: finding baseline matching with sum square difference and find top 3 matches for image pic.1016.jpg
+./Content-base Image Retrieval pic.1016.jpg /Users/chuhsuanlin/Desktop/olympus baseline ssd 3
+
+Taks 2: finding rg chromaticity histogram matching and histogram intersection as the distance metric.
+        Find top 3 matches for image pic.0164.jpg
+./Content-base Image Retrieval pic.0146.jpg /Users/chuhsuanlin/Desktop/olympus hist_2d inter_hist 3
+
+Run the code directly, if the CSV file do not exist, it will collecting the features and find the matching files
+If the CSV file exist, show the matching files by calculating similarity between input image and feature vector save in the file.
